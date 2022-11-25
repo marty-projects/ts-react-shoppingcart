@@ -1,7 +1,7 @@
 import {Offcanvas, Stack} from "react-bootstrap";
+import useMockApi from "../hooks/useMockApi"
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { formatCurrency } from "../utilities/formatCurrency";
-import storeItems from "../data/items.json"
 import {CartItem} from "./CartItem"
 
 
@@ -10,7 +10,13 @@ type ShoppingCartProps = {
 }
 
 export function ShoppingCart({isOpen}: ShoppingCartProps) {
+    
+    const {items} = useMockApi()
     const {closeCart, cartItems} = useShoppingCart()
+    const {removeFromCart} = useShoppingCart()
+    const item = items.find(item => item.id === item.id)
+
+    if (item == null) return null
     return (
     <Offcanvas show={isOpen} onHide={closeCart} placement="end">
         <Offcanvas.Header closeButton>
@@ -25,7 +31,7 @@ export function ShoppingCart({isOpen}: ShoppingCartProps) {
                     Total{" "}
                     {formatCurrency(
                         cartItems.reduce((total, cartItem) => {
-                            const item = storeItems.find(i => i.id === cartItem.id)
+                            const item = items.find(i => i.id === cartItem.id)
                             return total + (item?.price || 0) * cartItem.quantity
                     }, 0)
                     )}

@@ -1,6 +1,6 @@
 import { Button, Stack } from "react-bootstrap"
 import { useShoppingCart } from "../context/ShoppingCartContext"
-import storeItems from "../data/items.json"
+import useMockApi from "../hooks/useMockApi"
 import { formatCurrency } from "../utilities/formatCurrency"
 
 type CartItemProps = {
@@ -9,8 +9,10 @@ type CartItemProps = {
 }
 
 export function CartItem({id, quantity}: CartItemProps) {
+
+    const {items} = useMockApi()
     const {removeFromCart} = useShoppingCart()
-    const item = storeItems.find(i => i.id === id)
+    const item = items.find(i => i.id === id)
     if (item == null) return null
 
     return (
@@ -32,8 +34,8 @@ export function CartItem({id, quantity}: CartItemProps) {
                 </div>
             </div>
             <div>{formatCurrency(item.price * quantity)}</div>
-            <Button variant="outline-danger" size="sm" onClick={() =>
-            removeFromCart(item.id)}></Button>
+            <Button variant="danger" color="white" size="sm" onClick={() =>
+            removeFromCart(item.id)}>X</Button>
         </Stack>
     )
 }

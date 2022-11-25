@@ -1,4 +1,4 @@
-[
+{"items": [
     {
       "id": 1,
       "name": "Book",
@@ -24,3 +24,5 @@
       "imgUrl": "/imgs/car.jpg"
     }
   ]
+}
+  
